@@ -81,6 +81,7 @@ const Navbar: React.FC = () => {
       dispatch(setUser(responseUser));
     } catch (error) {
       console.log(error);
+      localStorage.removeItem("token");
       toast.error("Failed to get user");
     } finally {
       console.log("Done");
