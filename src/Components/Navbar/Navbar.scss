@@ -1,0 +1,44 @@
+@import '../../colors';
+
+
+.nav-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 8rem;
+    background-color: $primary;
+    color: #fff;
+    font-size: 1.2rem;
+    height: 80px;
+    width: 100%;
+    .nav-logo{
+        height: 2.5rem;
+        width: auto;
+    }
+    .nav-content {
+        display : flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 2rem;
+    }
+}
+
+.ant-input-group-addon{
+    background-color: transparent;
+    border: none;
+}
+
+.ant-input-search-button{
+    background-color: transparent;
+    border-left: none;
+}
+
+.input ::placeholder {
+    color: white;
+}
+
+.button{
+    color: $primary;
+    font-weight:500 ;
+    width: 100%;
+}
