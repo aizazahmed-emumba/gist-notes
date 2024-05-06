@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 import { RootState } from "../../store";
 import { Avatar, ConfigProvider, Table, TableColumnsType } from "antd";
 import { Gist } from "../../Types/Gist";
-import { convertDateToTime } from "../../utils/convertDateToTime";
+import { convertDateToTime } from "../../Utils/convertDateToTime";
 import { convertToCustomDateFormat } from "../../utils/convertToCustomDateFormat";
 import GistStar from "../GistStar";
 import GistFork from "../GistFork";
