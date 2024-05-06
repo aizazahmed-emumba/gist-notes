@@ -23,21 +23,21 @@
     }
 }
 
-.ant-input-group-addon{
-    background-color: transparent;
-    border: none;
-}
+// .ant-input-group-addon{
+//     background-color: transparent;
+//     border: none;
+// }
 
-.ant-input-search-button{
-    background-color: transparent;
-    border-left: none;
-}
+// .ant-input-search-button{
+//     background-color: transparent;
+//     border-left: none;
+// }
 
 .input ::placeholder {
     color: white;
 }
 
-.button{
+.button-nav{
     color: $primary;
     font-weight:500 ;
     width: 100%;
