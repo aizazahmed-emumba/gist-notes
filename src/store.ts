@@ -1,11 +1,13 @@
 import { configureStore } from '@reduxjs/toolkit'
 import userReducer from "./Slices/userSlice"
 import gistsReducer from './Slices/gistsSlice'
+import myGistsReducer from './Slices/myGistsSlice'
 
 export const store = configureStore({
   reducer: {
-    user : userReducer,
-    gists : gistsReducer
+    userState : userReducer,
+    gists : gistsReducer,
+    myGists : myGistsReducer
   },
 })
 

@@ -1,0 +1,46 @@
+@import "../../colors";
+
+
+.button {
+    background-color: $primary;
+    color: white;
+    font-weight: 500;
+    width: 20%;
+    padding: 10px;
+    border-radius: 10px;
+
+    &:hover {
+        background-color: darken($primary, 10%);
+    }
+    &:disabled {
+        background-color: lighten($primary, 20%);
+    }
+}
+
+
+.button-small {
+    background-color: $primary;
+    color: white;
+    font-weight: 500;
+    padding: 0px 5px;
+    margin: 2px;
+    margin-left: 5px;
+    border-radius: 4px;
+}
+.button-small:hover {
+    background-color: darken($primary, 10%);
+}
+.button-small:disabled {
+    background-color: lighten($primary, 20%);
+}
+
+.button:hover {
+    background-color: darken($primary, 10%);
+}
+
+.current-page {
+    border: 1px solid $primary;
+    padding: 0px 1rem;
+    border-radius: 8px;
+    margin: 0.5rem;
+}
