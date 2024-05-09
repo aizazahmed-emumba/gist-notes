@@ -1,8 +1,8 @@
 import { createSlice } from '@reduxjs/toolkit'
 import type { PayloadAction } from '@reduxjs/toolkit'
-import type { GitHubUser } from '../Types/User'
+import type { GitHubUser } from '../types/User'
 import toast from 'react-hot-toast'
-import { updateAuthToken } from '../API/GistAPI'
+import { updateAuthToken } from '../api/GistAPI'
 
 
 

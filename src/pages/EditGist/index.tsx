@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { Gist } from "../../Types/Gist";
+import { Gist } from "../../types/Gist";
 import toast from "react-hot-toast";
 import { RootState } from "../../store";
 import { useSelector } from "react-redux";
-import { gistAPI } from "../../API/GistAPI";
+import { gistAPI } from "../../api/GistAPI";
 import { Input } from "antd";
 import { ErrorMessage, FieldArray, Formik, Form } from "formik";
-import DeleteIcon from "../../Components/Icons/DeleteIcon";
+import DeleteIcon from "../../components/Icons/DeleteIcon";
 
 const index: React.FC = () => {
   const { id } = useParams<{ id: string }>();
@@ -34,6 +34,7 @@ const index: React.FC = () => {
       } else {
         toast.error("Failed to fetch Gist Data");
       }
+      navigate("/");
       setLoading(false);
     }
   };
@@ -61,21 +62,37 @@ const index: React.FC = () => {
         <Formik
           initialValues={initialValues}
           onSubmit={async (values) => {
-            const res = await gistAPI.patch(`/gists/${id}`, {
-              description: values.description,
-              files: values.file.reduce((acc: any, file) => {
-                acc[file.filename] = {
-                  content: file.content,
-                };
-                return acc;
-              }, {}),
+            console.log(values);
+            let files = values.file.reduce((acc: any, file) => {
+              acc[file.filename] = {
+                content: file.content,
+              };
+              return acc;
+            }, {});
+            Object.keys(gist?.files!).forEach((filename) => {
+              if (!(filename in files)) {
+                files[filename] = null;
+              }
             });
+            console.log(files);
+            try {
+              const res = await gistAPI.patch(`/gists/${id}`, {
+                description: values.description,
+                files: files,
+              });
 
-            if (res.status === 200) {
-              toast.success("Gist Updated Successfully");
-              navigate("/gist/" + id);
-            } else {
-              toast.error("Failed to update Gist");
+              console.log(res);
+              if (res.status === 200) {
+                toast.success("Gist Updated Successfully");
+                navigate("/gist/" + id);
+              } else {
+                toast.error("Failed to update Gist");
+              }
+            } catch (err: any) {
+              console.log(err);
+              if (err?.response?.data?.message === "Validation Failed")
+                toast.error("Validation Failed. Check your input fields");
+              else toast.error("Failed to update Gist");
             }
           }}
         >
@@ -124,6 +141,7 @@ const index: React.FC = () => {
                               />
 
                               <button
+                                type="button"
                                 onClick={() => {
                                   remove(index);
                                 }}
@@ -150,6 +168,7 @@ const index: React.FC = () => {
                         ))}
                       <div className="flex justify-between items-center">
                         <button
+                          type="button"
                           onClick={() => {
                             push({});
                           }}

@@ -1,20 +1,23 @@
-import { Avatar, Badge, Spin } from "antd";
 import React, { useEffect } from "react";
+import { Avatar, Badge, Spin } from "antd";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../store";
 import toast from "react-hot-toast";
-import { Link, useNavigate } from "react-router-dom";
-import { fetchMyGists } from "../../Slices/actions";
-import GistDescription from "../../Components/GistDescription";
-import GistStar from "../../Components/GistStar";
-import GistFork from "../../Components/GistFork";
-import CodeOutput from "../../Components/CodeOutput";
+import { Link, useNavigate, useParams } from "react-router-dom";
+import { fetchMyGists, fetchStarredGists } from "../../slices/actions";
+import GistDescription from "../../components/GistDescription";
+import GistStar from "../../components/GistStar";
+import GistFork from "../../components/GistFork";
+import CodeOutput from "../../components/CodeOutput";
 
-const MyGists: React.FC = () => {
-  const {
-    userState: { user },
-    myGists: { value, loading, error },
-  } = useSelector((state: RootState) => state);
+const index: React.FC = () => {
+  const { user } = useSelector((state: RootState) => state.userState);
+  const { error, loading, value } = useSelector(
+    (state: RootState) => state.myGists
+  );
+
+  const params = useParams();
+  const gistType = params["gistType"];
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -24,9 +27,15 @@ const MyGists: React.FC = () => {
       navigate("/");
       return;
     }
-
-    dispatch(fetchMyGists(user) as any);
-  }, []);
+    if (gistType === "starred") {
+      dispatch(fetchStarredGists() as any);
+    } else if (gistType === "all") {
+      dispatch(fetchMyGists(user) as any);
+    } else {
+      toast.error("Invalid Gist Type");
+      navigate("/");
+    }
+  }, [user?.screenName, gistType]);
 
   return (
     <div className="my-14">
@@ -45,7 +54,9 @@ const MyGists: React.FC = () => {
         </div>
         <div className="col-span-3 border-b border-gray-300">
           <div className="flex justify-start items-center gap-1">
-            <h1 className="text-2xl font-medium ml-10  ">All Gists </h1>
+            <h1 className="text-2xl font-medium ml-10  ">
+              {gistType === "starred" ? "Starred Gists" : "All Gists"}{" "}
+            </h1>
             <Badge
               count={value.length}
               style={{ backgroundColor: "#003B44" }}
@@ -61,7 +72,7 @@ const MyGists: React.FC = () => {
             {value.map((gist) => (
               <div className="mt-10 w-full px-10">
                 <div className="flex justify-between items-center">
-                  <div>
+                  <div className="max-w-80 overflow-hidden ">
                     <GistDescription gist={gist!} />
                   </div>
                   <div className="flex justify-between items-center">
@@ -70,7 +81,7 @@ const MyGists: React.FC = () => {
                       <div className="value">0</div>
                     </div>
                     <div className="text-blue-600 flex items-center justify-center gap-1">
-                      <GistFork gistId={gist.id} />
+                      <GistFork forks={gist.forks} gistId={gist.id} />
                       <div className="value">0</div>
                     </div>
                   </div>
@@ -100,4 +111,4 @@ const MyGists: React.FC = () => {
   );
 };
 
-export default MyGists;
+export default index;

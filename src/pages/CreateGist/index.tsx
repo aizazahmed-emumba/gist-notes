@@ -3,8 +3,8 @@ import React from "react";
 import { Formik, Form, ErrorMessage, FieldArray } from "formik";
 import { useNavigate } from "react-router-dom";
 
-import DeleteIcon from "../../Components/Icons/DeleteIcon";
-import { gistAPI } from "../../API/GistAPI";
+import DeleteIcon from "../../components/Icons/DeleteIcon";
+import { gistAPI } from "../../api/GistAPI";
 import toast from "react-hot-toast";
 
 const index: React.FC = () => {
@@ -88,6 +88,7 @@ const index: React.FC = () => {
                               />
 
                               <button
+                                type="button"
                                 onClick={() => {
                                   remove(index);
                                 }}
@@ -114,6 +115,7 @@ const index: React.FC = () => {
                         ))}
                       <div className="flex justify-between items-center">
                         <button
+                          type="button"
                           onClick={() => {
                             push({});
                           }}
