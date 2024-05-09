@@ -12,3 +12,46 @@
     cursor: pointer;
     font-size: 1rem;
 }
+
+
+.icon-button-container{
+    cursor: pointer;
+    margin-left: 0.5rem;
+    margin-right: 0.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 40px;
+
+    .icon-container{
+        color: white;
+        background-color: $primary;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 0.5rem;
+        border-top-right-radius: 0px;
+        border-bottom-right-radius: 0px;
+        padding-left: 0.5rem ;
+        padding-right: 0.5rem ;
+    }
+    .count-container{
+        color: $primary;
+        background-color: white;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-width: 1px;
+        border-radius: 0.5rem;
+        border-top-left-radius: 0px;
+        border-bottom-left-radius: 0px;
+        --tw-border-opacity: 1;
+        border-color: rgb(0 59 68 / var(--tw-border-opacity));
+        padding-left: 1rem ;
+        padding-right: 1rem ;
+    }
+}

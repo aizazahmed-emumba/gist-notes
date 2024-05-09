@@ -1,7 +1,7 @@
 import { StarFilled, StarOutlined } from "@ant-design/icons";
 import React, { useEffect, useState } from "react";
 import toast from "react-hot-toast";
-import { gistAPI } from "../../API/GistAPI";
+import { gistAPI } from "../../api/GistAPI";
 import { RootState } from "../../store";
 import { useSelector } from "react-redux";
 import "./GistStar.scss";
@@ -31,7 +31,7 @@ const index: React.FC<GistStarProps> = ({ gistId, removeText }) => {
 
   useEffect(() => {
     fetchStarredStatus();
-  }, []);
+  }, [gistId]);
 
   const handleStarGist = async () => {
     try {
@@ -52,7 +52,7 @@ const index: React.FC<GistStarProps> = ({ gistId, removeText }) => {
   };
 
   return (
-    <div onClick={handleStarGist} className="cursor-pointer">
+    <div onClick={handleStarGist} className="cursor-pointer ">
       {isStarred ? (
         <>
           <StarFilled className="action-icon" /> {!removeText && "Star"}

@@ -1,7 +1,7 @@
 import { configureStore } from '@reduxjs/toolkit'
-import userReducer from "./Slices/userSlice"
-import gistsReducer from './Slices/gistsSlice'
-import myGistsReducer from './Slices/myGistsSlice'
+import userReducer from "./slices/userSlice"
+import gistsReducer from './slices/gistsSlice'
+import myGistsReducer from './slices/myGistsSlice'
 
 export const store = configureStore({
   reducer: {

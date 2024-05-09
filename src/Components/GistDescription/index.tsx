@@ -1,6 +1,6 @@
 import { Avatar } from "antd";
 import React from "react";
-import { Gist } from "../../Types/Gist";
+import { Gist } from "../../types/Gist";
 import formatRelativeTime from "../../utils/formatRelativeTime";
 
 interface GistDescriptionProps {

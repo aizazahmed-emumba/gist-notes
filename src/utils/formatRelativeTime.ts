@@ -4,6 +4,7 @@ export default function formatRelativeTime(isoDateString: string): string {
 
     const timeDifference = now.getTime() - date.getTime();
     const hours = Math.floor(timeDifference / (1000 * 60 * 60));
+    const minutes = Math.floor((timeDifference % (1000 * 60 * 60)) / (1000 * 60)); // Calculate remaining minutes
     const days = Math.floor(hours / 24);
 
     if (days > 0) {
@@ -12,11 +13,19 @@ export default function formatRelativeTime(isoDateString: string): string {
         } else {
             return days + ' days ago';
         }
-    } else if (hours === 0) {
-        return 'just now';
-    } else if (hours === 1) {
-        return '1 hour ago';
+    } else if (hours > 0) {
+        if (hours === 1) {
+            return '1 hour ago';
+        } else {
+            return hours + ' hours ago';
+        }
+    } else if (minutes > 0) {
+        if (minutes === 1) {
+            return '1 minute ago';
+        } else {
+            return minutes + ' minutes ago';
+        }
     } else {
-        return hours + ' hours ago';
+        return 'just now';
     }
 }

@@ -3,8 +3,8 @@ import "./GistGridLayout.scss";
 import { useSelector } from "react-redux";
 import { RootState } from "../../store";
 import { Link } from "react-router-dom";
-import GistDescription from "../../Components/GistDescription";
-import CodeOutput from "../../Components/CodeOutput";
+import GistDescription from "../../components/GistDescription";
+import CodeOutput from "../../components/CodeOutput";
 
 const GistGridLayout: React.FC = () => {
   const gists = useSelector((state: RootState) => state.gists.value);

@@ -3,7 +3,7 @@ import "./App.css";
 // import Navbar from "./Components/Navbar/Navbar";
 import HomePage from "./pages/HomePage";
 import { Toaster } from "react-hot-toast";
-import Navbar2 from "./Components/Navbar/Navbar2";
+import Navbar2 from "./components/Navbar/Navbar2";
 import GistPage from "./pages/GistPage";
 import MyGists from "./pages/MyGists";
 import { initializeApp } from "firebase/app";
@@ -24,7 +24,7 @@ function App() {
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/gist/:id" element={<GistPage />} />
-          <Route path="/my-gists" element={<MyGists />} />
+          <Route path="/my-gists/:gistType" element={<MyGists />} />
           <Route path="/create" element={<CreateGist />} />
           <Route path="/edit/:id" element={<EditGist />} />
           <Route path="/about" element={<div>About</div>} />

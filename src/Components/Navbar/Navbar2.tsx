@@ -9,8 +9,8 @@ import {
   setError,
   setLoading,
   setUser,
-} from "../../Slices/userSlice";
-import { updateAuthToken } from "../../API/GistAPI";
+} from "../../slices/userSlice";
+import { updateAuthToken } from "../../api/GistAPI";
 import { Link } from "react-router-dom";
 import { SearchOutlined } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
@@ -68,15 +68,15 @@ const Navbar2: React.FC = () => {
       type: "divider",
     },
     {
-      label: <Link to={"my-gists"}>Your gists</Link>,
+      label: <Link to={"/my-gists/all"}>Your Gists</Link>,
       key: "1",
     },
     {
-      label: <div>Starred gists</div>,
+      label: <Link to={"/my-gists/starred"}>Starred Gists</Link>,
       key: "3",
     },
     {
-      label: <div>Help</div>,
+      label: <Link to={"/create"}>Create Gist</Link>,
       key: "4",
     },
     {
@@ -108,7 +108,11 @@ const Navbar2: React.FC = () => {
   return (
     <div className="nav-container">
       <Link to={"/"}>
-        <img src="./EmumbaLogo.png" alt="logo" className="nav-logo" />
+        <img
+          src="../../../public/EmumbaLogo.png"
+          alt="logo"
+          className="nav-logo"
+        />
       </Link>
       <div className="nav-content">
         <div>

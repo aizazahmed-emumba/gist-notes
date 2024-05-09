@@ -13,7 +13,7 @@ export interface Gist
                 content? : string;
             }
         };
-        forks: any[];
+        forks: Fork[];
         public: boolean;
         created_at: string;
         updated_at: string;
@@ -42,4 +42,14 @@ export interface Gist
             site_admin: boolean;
         };
         truncated: boolean;
+    }
+
+    export interface Fork {
+        created_at: string;
+        id : string;
+        updated_at: string;
+        url : string;
+        user : {
+            login : string;
+        }
     }

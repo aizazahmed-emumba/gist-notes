@@ -2,12 +2,11 @@ import React from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "../../store";
 import { Avatar, ConfigProvider, Table, TableColumnsType } from "antd";
-import { Gist } from "../../Types/Gist";
-import { convertDateToTime } from "../../utils/convertDateToTime";
-import { convertToCustomDateFormat } from "../../utils/convertToCustomDateFormat";
-import GistStar from "../GistStar";
-import GistFork from "../GistFork";
+import { Gist } from "../../types/Gist";
+import GistStar from "../../components/GistStar";
+import GistFork from "../../components/GistFork";
 import "./GistListLayour.scss";
+import formatRelativeTime from "../../utils/formatRelativeTime";
 
 const index: React.FC = () => {
   const gists = useSelector((state: RootState) => state.gists.value);
@@ -24,14 +23,9 @@ const index: React.FC = () => {
       ),
     },
     {
-      title: "Date",
-      dataIndex: "created_at",
-      render: (text: string) => <a>{convertToCustomDateFormat(text)}</a>,
-    },
-    {
-      title: "Time",
-      dataIndex: "created_at",
-      render: (text: string) => <a>{convertDateToTime(text)}</a>,
+      title: "Notebook Name",
+      dataIndex: "files",
+      render: (files: any) => <a>{files[Object.keys(files)[0]].filename}</a>,
     },
     {
       title: "Keyword",
@@ -47,17 +41,17 @@ const index: React.FC = () => {
       },
     },
     {
-      title: "Notebook Name",
-      dataIndex: "files",
-      render: (files: any) => <a>{files[Object.keys(files)[0]].filename}</a>,
+      title: "Updated",
+      dataIndex: "updated_at",
+      render: (text: string) => <a>{formatRelativeTime(text)}</a>,
     },
     {
       title: "",
       dataIndex: "id",
       render: (id: string) => (
         <div className="flex justify-center items-center gap-5">
-          <GistStar removeText gistId={id} />
-          <GistFork removeText gistId={id} />
+          <GistStar key={id} removeText gistId={id} />
+          <GistFork forks={[]} key={id} removeText gistId={id} />
         </div>
       ),
     },

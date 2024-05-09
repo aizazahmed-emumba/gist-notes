@@ -44,3 +44,26 @@
     border-radius: 8px;
     margin: 0.5rem;
 }
+
+
+.grid-layout-icon-container {
+             color: "#B7B7B7";
+              border-radius: 4px  0px 0px 4px;
+              border : 1px solid;
+              border-color: #E3E3E3;
+              border-right: none;
+              padding: 8px 12px 8px 12px;
+              cursor: pointer;
+}
+
+
+
+.list-layout-icon-container {
+    color: "#B7B7B7";
+     border-radius: 0px  4px 4px 0px;
+     border : 1px solid;
+     border-color: #E3E3E3;
+     border-left: none;
+     padding: 8px 12px 8px 12px;
+     cursor: pointer;
+}
