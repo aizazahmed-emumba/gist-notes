@@ -1,4 +1,3 @@
-
-test("Always true test", () => {
+test('Always true test', () => {
   expect(true).toBe(true);
 });

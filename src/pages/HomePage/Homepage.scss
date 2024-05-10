@@ -1,69 +1,64 @@
-@import "../../colors";
-
+@import '../../colors';
 
 .button {
-    background-color: $primary;
-    color: white;
-    font-weight: 500;
-    width: 20%;
-    padding: 10px;
-    border-radius: 10px;
+  background-color: $primary;
+  color: white;
+  font-weight: 500;
+  width: 20%;
+  padding: 10px;
+  border-radius: 10px;
 
-    &:hover {
-        background-color: darken($primary, 10%);
-    }
-    &:disabled {
-        background-color: lighten($primary, 20%);
-    }
+  &:hover {
+    background-color: darken($primary, 10%);
+  }
+  &:disabled {
+    background-color: lighten($primary, 20%);
+  }
 }
-
 
 .button-small {
-    background-color: $primary;
-    color: white;
-    font-weight: 500;
-    padding: 0px 5px;
-    margin: 2px;
-    margin-left: 5px;
-    border-radius: 4px;
+  background-color: $primary;
+  color: white;
+  font-weight: 500;
+  padding: 0px 5px;
+  margin: 2px;
+  margin-left: 5px;
+  border-radius: 4px;
 }
 .button-small:hover {
-    background-color: darken($primary, 10%);
+  background-color: darken($primary, 10%);
 }
 .button-small:disabled {
-    background-color: lighten($primary, 20%);
+  background-color: lighten($primary, 20%);
 }
 
 .button:hover {
-    background-color: darken($primary, 10%);
+  background-color: darken($primary, 10%);
 }
 
 .current-page {
-    border: 1px solid $primary;
-    padding: 0px 1rem;
-    border-radius: 8px;
-    margin: 0.5rem;
+  border: 1px solid $primary;
+  padding: 0px 1rem;
+  border-radius: 8px;
+  margin: 0.5rem;
 }
-
 
 .grid-layout-icon-container {
-             color: "#B7B7B7";
-              border-radius: 4px  0px 0px 4px;
-              border : 1px solid;
-              border-color: #E3E3E3;
-              border-right: none;
-              padding: 8px 12px 8px 12px;
-              cursor: pointer;
+  color: '#B7B7B7';
+  border-radius: 4px 0px 0px 4px;
+  border: 1px solid;
+  border-color: #e3e3e3;
+  border-right: none;
+  padding: 8px 12px 8px 12px;
+  cursor: pointer;
 }
 
-
-
 .list-layout-icon-container {
-    color: "#B7B7B7";
-     border-radius: 0px  4px 4px 0px;
-     border : 1px solid;
-     border-color: #E3E3E3;
-     border-left: none;
-     padding: 8px 12px 8px 12px;
-     cursor: pointer;
+  color: '#B7B7B7';
+  border-radius: 0px 4px 4px 0px;
+  border: 1px solid;
+  border-color: #e3e3e3;
+  border-left: none;
+  padding: 8px 12px 8px 12px;
+  cursor: pointer;
 }

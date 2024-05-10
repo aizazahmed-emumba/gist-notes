@@ -1,29 +1,24 @@
-import React, { useState } from "react";
-import "./Navbar.scss";
-import { getAuth, signInWithPopup, GithubAuthProvider } from "firebase/auth";
-import { Button, Dropdown, Space, Input, Avatar, MenuProps, Spin } from "antd";
-import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "../../store";
-import {
-  clearUser,
-  setError,
-  setLoading,
-  setUser,
-} from "../../slices/userSlice";
-import { updateAuthToken } from "../../api/GistAPI";
-import { Link } from "react-router-dom";
-import { SearchOutlined } from "@ant-design/icons";
-import { useNavigate } from "react-router-dom";
+import React, { useState } from 'react';
+import './Navbar.scss';
+import { getAuth, signInWithPopup, GithubAuthProvider } from 'firebase/auth';
+// eslint-disable-next-line import/named
+import { Button, Dropdown, Space, Input, Avatar, MenuProps, Spin } from 'antd';
+import { useDispatch, useSelector } from 'react-redux';
+import { Link, useNavigate } from 'react-router-dom';
+import { SearchOutlined } from '@ant-design/icons';
+import { RootState } from '../../store';
+import { clearUser, setError, setLoading, setUser } from '../../slices/userSlice';
+import { updateAuthToken } from '../../api/GistAPI';
 
 const Navbar2: React.FC = () => {
   const dispatch = useDispatch();
 
-  const [keyowrd, setKeyword] = useState("");
+  const [keyowrd, setKeyword] = useState('');
   const { user, loading } = useSelector((state: RootState) => state.userState);
   const navigate = useNavigate();
 
   const provider = new GithubAuthProvider();
-  provider.addScope("gist");
+  provider.addScope('gist');
   const auth = getAuth();
 
   const LoginWithGithub = async () => {
@@ -34,15 +29,14 @@ const Navbar2: React.FC = () => {
         const token = credential!.accessToken;
 
         if (!token) return;
-        localStorage.setItem("token", token);
+        localStorage.setItem('token', token);
         console.log(token);
 
+        // Had to give it the type any because the Type that firbase returns does not have the reloadUserInfo property which we need.
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         const user = result.user as any;
         const { email, photoUrl, screenName } = user.reloadUserInfo;
-        localStorage.setItem(
-          "user",
-          JSON.stringify({ email, photoUrl, screenName })
-        );
+        localStorage.setItem('user', JSON.stringify({ email, photoUrl, screenName }));
         dispatch(setUser({ email, photoUrl, screenName }));
         updateAuthToken();
       })
@@ -54,65 +48,56 @@ const Navbar2: React.FC = () => {
       });
   };
 
-  const items: MenuProps["items"] = [
+  const items: MenuProps['items'] = [
     {
       label: (
         <div>
-          Signed in as <br />{" "}
-          <span className="font-semibold">{user?.screenName}</span>
+          Signed in as <br /> <span className="font-semibold">{user?.screenName}</span>
         </div>
       ),
-      key: "0",
+      key: '0',
     },
     {
-      type: "divider",
+      type: 'divider',
     },
     {
-      label: <Link to={"/my-gists/all"}>Your Gists</Link>,
-      key: "1",
+      label: <Link to="/my-gists/all">Your Gists</Link>,
+      key: '1',
     },
     {
-      label: <Link to={"/my-gists/starred"}>Starred Gists</Link>,
-      key: "3",
+      label: <Link to="/my-gists/starred">Starred Gists</Link>,
+      key: '3',
     },
     {
-      label: <Link to={"/create"}>Create Gist</Link>,
-      key: "4",
+      label: <Link to="/create">Create Gist</Link>,
+      key: '4',
     },
     {
-      type: "divider",
+      type: 'divider',
     },
     {
-      label: (
-        <a href={`https://github.com/${user?.screenName}`}>
-          Your Github Profile
-        </a>
-      ),
-      key: "5",
+      label: <a href={`https://github.com/${user?.screenName}`}>Your Github Profile</a>,
+      key: '5',
     },
     {
       label: (
-        <div
+        <button
           onClick={() => {
             dispatch(clearUser());
-            navigate("/");
+            navigate('/');
           }}
         >
           Sign out
-        </div>
+        </button>
       ),
-      key: "6",
+      key: '6',
     },
   ];
 
   return (
     <div className="nav-container">
-      <Link to={"/"}>
-        <img
-          src="../../../public/EmumbaLogo.png"
-          alt="logo"
-          className="nav-logo"
-        />
+      <Link to="/">
+        <img src="../../../public/EmumbaLogo.png" alt="logo" className="nav-logo" />
       </Link>
       <div className="nav-content">
         <div>
@@ -121,17 +106,17 @@ const Navbar2: React.FC = () => {
               navigate(`/gist/${keyowrd}`);
             }}
             value={keyowrd}
-            onChange={(e: any) => setKeyword(e.target.value)}
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) => setKeyword(e.target.value)}
             addonBefore={<SearchOutlined className="text-white" />}
             classNames={{}}
             style={{
-              minWidth: "300px",
+              minWidth: '300px',
             }}
             styles={{
               input: {
-                backgroundColor: "transparent",
-                color: "white",
-                borderLeft: "none",
+                backgroundColor: 'transparent',
+                color: 'white',
+                borderLeft: 'none',
               },
             }}
             placeholder="Search Gists ..."
@@ -143,13 +128,8 @@ const Navbar2: React.FC = () => {
           {!loading ? (
             user ? (
               <div className="cursor-pointer">
-                <Dropdown
-                  menu={{ items }}
-                  trigger={["click"]}
-                  placement="bottom"
-                  arrow
-                >
-                  <a onClick={(e) => e.preventDefault()}>
+                <Dropdown menu={{ items }} trigger={['click']} placement="bottom" arrow>
+                  <button onClick={(e) => e.preventDefault()}>
                     <Space>
                       <Avatar
                         src={user.photoUrl}
@@ -163,7 +143,7 @@ const Navbar2: React.FC = () => {
                         }}
                       />
                     </Space>
-                  </a>
+                  </button>
                 </Dropdown>
               </div>
             ) : (

@@ -1,8 +1,8 @@
-export const isValidJson  = (json:any): boolean =>  {
-    try {
-        JSON.parse(json);
-        return true;
-    } catch (error) {
-        return false;
-    }
-}
+export const isValidJson = (json: string): boolean => {
+  try {
+    JSON.parse(json);
+    return true;
+  } catch (error) {
+    return false;
+  }
+};

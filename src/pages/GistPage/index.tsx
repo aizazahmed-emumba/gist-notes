@@ -1,20 +1,21 @@
-import React, { useEffect, useState } from "react";
-import { useParams, useNavigate, Link } from "react-router-dom";
-import { gistAPI } from "../../api/GistAPI";
-import { Gist } from "../../types/Gist";
-import GistDescription from "../../components/GistDescription";
-import toast from "react-hot-toast";
-import { useDispatch, useSelector } from "react-redux";
-import CodeOutput from "../../components/CodeOutput";
-import GistStarWhite from "../../components/GistStar/WhiteStar";
-import GistFork from "../../components/GistFork";
-import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
-import "./GistPage.scss";
-import { RootState } from "../../store";
-import { Spin } from "antd";
-import { removeGist } from "../../slices/gistsSlice";
+import React, { useEffect, useState } from 'react';
+import { useParams, useNavigate, Link } from 'react-router-dom';
+import toast from 'react-hot-toast';
+import { useDispatch, useSelector } from 'react-redux';
+import { DeleteOutlined, EditOutlined } from '@ant-design/icons';
+import { Spin } from 'antd';
+import { AxiosError } from 'axios';
+import { gistAPI } from '../../api/GistAPI';
+import { Gist } from '../../types/Gist';
+import GistDescription from '../../components/GistDescription';
+import CodeOutput from '../../components/CodeOutput';
+import GistStarWhite from '../../components/GistStar/WhiteStar';
+import GistFork from '../../components/GistFork';
+import './GistPage.scss';
+import { RootState } from '../../store';
+import { removeGist } from '../../slices/gistsSlice';
 
-const index: React.FC = () => {
+const GistPage: React.FC = () => {
   const { id } = useParams<{ id: string }>();
   const [gist, setGist] = useState<Gist | null>(null);
   const [Loading, setLoading] = useState<boolean>(true);
@@ -24,24 +25,23 @@ const index: React.FC = () => {
 
   const navigation = useNavigate();
 
-  const fetchGist = async () => {
-    try {
-      const res = await gistAPI.get(`/gists/${id}`);
-      console.log(res.data);
-      setGist(res.data);
-      setLoading(false);
-    } catch (err: any) {
-      if (err?.response?.status === 401) {
-        toast.error("Login to view Gist");
-      } else {
-        toast.error("Failed to fetch Gist");
-      }
-
-      setLoading(false);
-    }
-  };
-
   useEffect(() => {
+    const fetchGist = async () => {
+      try {
+        const res = await gistAPI.get(`/gists/${id}`);
+        console.log(res.data);
+        setGist(res.data);
+        setLoading(false);
+      } catch (err: unknown) {
+        if ((err as AxiosError)?.response?.status === 401) {
+          toast.error('Login to view Gist');
+        } else {
+          toast.error('Failed to fetch Gist');
+        }
+
+        setLoading(false);
+      }
+    };
     setLoading(true);
     setGist(null);
     fetchGist();
@@ -51,13 +51,13 @@ const index: React.FC = () => {
     try {
       const res = await gistAPI.delete(`/gists/${gist?.id}`);
       if (res.status === 204) {
-        toast.success("Gist Deleted Successfully");
-        dispatch(removeGist(gist?.id!));
-        navigation("/");
+        toast.success('Gist Deleted Successfully');
+        dispatch(removeGist(gist?.id ?? ''));
+        navigation('/');
       }
     } catch (err) {
       console.log(err);
-      toast.error("Failed to delete Gist");
+      toast.error('Failed to delete Gist');
     }
   };
 
@@ -84,15 +84,13 @@ const index: React.FC = () => {
             </div>
             <div
               className={`flex ${
-                user?.screenName === gist.owner.login
-                  ? "justify-evenly"
-                  : "justify-center"
+                user?.screenName === gist.owner.login ? 'justify-evenly' : 'justify-center'
               } items-center `}
             >
               {user?.screenName === gist.owner.login && (
                 <>
                   <Link
-                    to={"/edit/" + gist.id}
+                    to={`/edit/${  gist.id}`}
                     className="cursor-pointer mx-2 flex gap-1 items-center w-full justify-center button h-[40px] "
                   >
                     <div>
@@ -100,7 +98,7 @@ const index: React.FC = () => {
                     </div>
                     <div>Edit </div>
                   </Link>
-                  <div
+                  <button
                     onClick={handleDeleteGist}
                     className="cursor-pointer mx-2 flex gap-2 items-center w-full justify-center button h-[40px]"
                   >
@@ -108,7 +106,7 @@ const index: React.FC = () => {
                       <DeleteOutlined />
                     </div>
                     <div>Delete</div>
-                  </div>
+                  </button>
                 </>
               )}
 
@@ -123,9 +121,9 @@ const index: React.FC = () => {
               <CodeOutput
                 key={index} // Ensure each component has a unique key
                 disableOverlay
-                fileLanguage={gist.files[fileName]?.language || "javascript"}
+                fileLanguage={gist.files[fileName]?.language || 'javascript'}
                 lineNumberMargin
-                content={gist.files[fileName]?.content || ""}
+                content={gist.files[fileName]?.content || ''}
                 filename={gist.files[fileName]?.filename}
                 fontSize="0.9rem"
                 height="full"
@@ -140,4 +138,4 @@ const index: React.FC = () => {
   );
 };
 
-export default index;
+export default GistPage;

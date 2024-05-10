@@ -1,18 +1,18 @@
-import { Routes, Route } from "react-router-dom";
-import "./App.css";
-import HomePage from "./pages/HomePage";
-import { Toaster } from "react-hot-toast";
-import Navbar2 from "./components/Navbar/Navbar2";
-import GistPage from "./pages/GistPage";
-import MyGists from "./pages/MyGists";
-import { initializeApp } from "firebase/app";
-import CreateGist from "./pages/CreateGist";
-import EditGist from "./pages/EditGist";
+import { Routes, Route } from 'react-router-dom';
+import './App.css';
+import { Toaster } from 'react-hot-toast';
+import { initializeApp } from 'firebase/app';
+import HomePage from './pages/HomePage';
+import Navbar2 from './components/Navbar/Navbar2';
+import GistPage from './pages/GistPage';
+import MyGists from './pages/MyGists';
+import CreateGist from './pages/CreateGist';
+import EditGist from './pages/EditGist';
 
 initializeApp({
-  apiKey: "AIzaSyAfFRNqQ3fA59MZ_f6XZwfkMbyDFxywqqM",
-  projectId: "gist-notes-3db94",
-  authDomain: "gist-notes-3db94.firebaseapp.com",
+  apiKey: 'AIzaSyAfFRNqQ3fA59MZ_f6XZwfkMbyDFxywqqM',
+  projectId: 'gist-notes-3db94',
+  authDomain: 'gist-notes-3db94.firebaseapp.com',
 });
 
 function App() {

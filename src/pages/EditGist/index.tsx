@@ -1,58 +1,59 @@
-import React, { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
-import { Gist } from "../../types/Gist";
-import toast from "react-hot-toast";
-import { RootState } from "../../store";
-import { useSelector } from "react-redux";
-import { gistAPI } from "../../api/GistAPI";
-import { Input } from "antd";
-import { ErrorMessage, FieldArray, Formik, Form } from "formik";
-import DeleteIcon from "../../components/Icons/DeleteIcon";
+import React, { useEffect, useState } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
+import toast from 'react-hot-toast';
+import { useSelector } from 'react-redux';
+import { Input } from 'antd';
+import { ErrorMessage, FieldArray, Formik, Form } from 'formik';
+import { gistAPI } from '../../api/GistAPI';
+import { RootState } from '../../store';
+import { Gist } from '../../types/Gist';
+import DeleteIcon from '../../components/Icons/DeleteIcon';
+import { FileAccType } from '../../types/File';
 
-const index: React.FC = () => {
+const EditGistPage: React.FC = () => {
   const { id } = useParams<{ id: string }>();
   const [gist, setGist] = useState<Gist | null>(null);
   const [Loading, setLoading] = useState<boolean>(true);
   const navigate = useNavigate();
   const user = useSelector((state: RootState) => state.userState.user);
 
-  const fetchGist = async () => {
-    try {
-      const res = await gistAPI.get(`/gists/${id}`);
-      console.log(res.data);
-      if (user?.screenName !== res.data.owner.login) {
-        toast.error("You are not authorized to Edit this Gist");
-        navigate("/");
-      } else {
-        setGist(res.data);
-      }
-      setLoading(false);
-    } catch (err: any) {
-      console.log(err);
-      if (err?.response?.status === 401) {
-        toast.error("Login to view Gist");
-      } else {
-        toast.error("Failed to fetch Gist Data");
-      }
-      navigate("/");
-      setLoading(false);
-    }
-  };
-
   useEffect(() => {
+    const fetchGist = async () => {
+      try {
+        const res = await gistAPI.get(`/gists/${id}`);
+        console.log(res.data);
+        if (user?.screenName !== res.data.owner.login) {
+          toast.error('You are not authorized to Edit this Gist');
+          navigate('/');
+        } else {
+          setGist(res.data);
+        }
+        setLoading(false);
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      } catch (err: any) {
+        console.log(err);
+        if (err?.response?.status === 401) {
+          toast.error('Login to view Gist');
+        } else {
+          toast.error('Failed to fetch Gist Data');
+        }
+        navigate('/');
+        setLoading(false);
+      }
+    };
     fetchGist();
-  }, [id]);
+  }, [id, navigate, user?.screenName]);
 
   if (Loading) return <div>Loading...</div>;
 
   const initialValues = {
-    description: gist?.description || "",
+    description: gist?.description || '',
     file: gist?.files
       ? Object.keys(gist.files).map((key) => ({
           filename: gist.files[key].filename,
           content: gist.files[key].content,
         }))
-      : [{ filename: "", content: "" }],
+      : [{ filename: '', content: '' }],
   };
 
   return (
@@ -63,36 +64,36 @@ const index: React.FC = () => {
           initialValues={initialValues}
           onSubmit={async (values) => {
             console.log(values);
-            let files = values.file.reduce((acc: any, file) => {
+            const files = values.file.reduce((acc: FileAccType, file) => {
               acc[file.filename] = {
-                content: file.content,
+                content: file?.content || '',
               };
               return acc;
             }, {});
-            Object.keys(gist?.files!).forEach((filename) => {
+            Object.keys(gist?.files ?? {}).forEach((filename) => {
               if (!(filename in files)) {
                 files[filename] = null;
               }
             });
-            console.log(files);
             try {
               const res = await gistAPI.patch(`/gists/${id}`, {
                 description: values.description,
-                files: files,
+                files,
               });
 
               console.log(res);
               if (res.status === 200) {
-                toast.success("Gist Updated Successfully");
-                navigate("/gist/" + id);
+                toast.success('Gist Updated Successfully');
+                navigate(`/gist/${  id}`);
               } else {
-                toast.error("Failed to update Gist");
+                toast.error('Failed to update Gist');
               }
+              // eslint-disable-next-line @typescript-eslint/no-explicit-any
             } catch (err: any) {
               console.log(err);
-              if (err?.response?.data?.message === "Validation Failed")
-                toast.error("Validation Failed. Check your input fields");
-              else toast.error("Failed to update Gist");
+              if (err?.response?.data?.message === 'Validation Failed')
+                toast.error('Validation Failed. Check your input fields');
+              else toast.error('Failed to update Gist');
             }
           }}
         >
@@ -104,7 +105,7 @@ const index: React.FC = () => {
                   size="large"
                   type="text"
                   style={{
-                    borderColor: "#A3A3A3",
+                    borderColor: '#A3A3A3',
                   }}
                   placeholder="Gist Description"
                   className="input"
@@ -117,14 +118,14 @@ const index: React.FC = () => {
                     <>
                       {values.file.length > 0 &&
                         values.file.map((_, index) => (
-                          <div className="w-full border flex flex-col">
+                          <div key={index} className="w-full border flex flex-col">
                             <div className="px-2 py-3 bg-[#FAFAFA] flex justify-start items-center gap-5">
                               <Input
                                 name={`file.${index}.filename`}
                                 style={{
-                                  width: "50%",
-                                  backgroundColor: "transparent",
-                                  border: "1px solid #A3A3A3",
+                                  width: '50%',
+                                  backgroundColor: 'transparent',
+                                  border: '1px solid #A3A3A3',
                                 }}
                                 placeholder="Filename including extension"
                                 className="input"
@@ -135,9 +136,7 @@ const index: React.FC = () => {
                               />
                               <ErrorMessage
                                 name={`file.${index}.filename`}
-                                render={(msg) => (
-                                  <div className="text-red-500">{msg}</div>
-                                )}
+                                render={(msg) => <div className="text-red-500">{msg}</div>}
                               />
 
                               <button
@@ -157,13 +156,13 @@ const index: React.FC = () => {
                                 size="large"
                                 autoSize={{ minRows: 10 }}
                                 style={{
-                                  border: "none",
+                                  border: 'none',
                                 }}
                                 onChange={handleChange}
                                 value={values.file[index].content}
                               />
                             </div>
-                            <div></div>
+                            <div />
                           </div>
                         ))}
                       <div className="flex justify-between items-center">
@@ -176,11 +175,7 @@ const index: React.FC = () => {
                         >
                           Add file
                         </button>
-                        <button
-                          disabled={isSubmitting}
-                          type="submit"
-                          className="button"
-                        >
+                        <button disabled={isSubmitting} type="submit" className="button">
                           Update Gist
                         </button>
                       </div>
@@ -196,4 +191,4 @@ const index: React.FC = () => {
   );
 };
 
-export default index;
+export default EditGistPage;

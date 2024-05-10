@@ -1,17 +1,15 @@
+.gist-grid-layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-gap: 40px;
+  margin-top: 20px;
+  margin-bottom: 20px;
 
+  @media (max-width: 768px) {
+    grid-template-columns: 1fr 1fr;
+  }
 
-.gist-grid-layout{
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    grid-gap: 40px;
-    margin-top: 20px;
-    margin-bottom: 20px;
-
-    @media (max-width: 768px){
-        grid-template-columns: 1fr 1fr;
-    }
-
-    @media (max-width: 576px){
-        grid-template-columns: 1fr;
-    }
+  @media (max-width: 576px) {
+    grid-template-columns: 1fr;
+  }
 }

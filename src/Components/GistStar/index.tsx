@@ -1,35 +1,36 @@
-import { StarFilled, StarOutlined } from "@ant-design/icons";
-import React, { useEffect, useState } from "react";
-import toast from "react-hot-toast";
-import { gistAPI } from "../../api/GistAPI";
-import { RootState } from "../../store";
-import { useSelector } from "react-redux";
-import "./GistStar.scss";
+import { StarFilled, StarOutlined } from '@ant-design/icons';
+import React, { useEffect, useState } from 'react';
+import toast from 'react-hot-toast';
+import { useSelector } from 'react-redux';
+import { gistAPI } from '../../api/GistAPI';
+import { RootState } from '../../store';
+import './GistStar.scss';
+import { AxiosError } from 'axios';
 
 interface GistStarProps {
   gistId: string;
   removeText?: boolean;
 }
 
-const index: React.FC<GistStarProps> = ({ gistId, removeText }) => {
+const GistStar: React.FC<GistStarProps> = ({ gistId, removeText }) => {
   const [isStarred, setIsStarred] = useState<boolean>(false);
   const user = useSelector((state: RootState) => state.userState.user);
 
-  const fetchStarredStatus = async () => {
-    try {
-      const res = await gistAPI.get(`/gists/${gistId}/star`);
-      if (res.status === 204) {
-        setIsStarred(true);
-      }
-    } catch (err: any) {
-      console.log(err);
-      if (err?.response?.status !== 404) {
-        toast.error("Failed to fetch starred status");
-      }
-    }
-  };
-
   useEffect(() => {
+    const fetchStarredStatus = async () => {
+      try {
+        const res = await gistAPI.get(`/gists/${gistId}/star`);
+        if (res.status === 204) {
+          setIsStarred(true);
+        }
+      } catch (err: unknown) {
+        console.log(err);
+        const error = err as AxiosError;
+        if (error.response?.status === 404) {
+          setIsStarred(false);
+        }
+      }
+    };
     fetchStarredStatus();
   }, [gistId]);
 
@@ -44,26 +45,26 @@ const index: React.FC<GistStarProps> = ({ gistId, removeText }) => {
     } catch (err) {
       setIsStarred((prevIsStarred) => !prevIsStarred);
       console.log(err);
-      if (!user) toast.error("Login to star Gist");
+      if (!user) toast.error('Login to star Gist');
       else {
-        toast.error("Failed to star Gist");
+        toast.error('Failed to star Gist');
       }
     }
   };
 
   return (
-    <div onClick={handleStarGist} className="cursor-pointer ">
+    <button onClick={handleStarGist} className="cursor-pointer ">
       {isStarred ? (
         <>
-          <StarFilled className="action-icon" /> {!removeText && "Star"}
+          <StarFilled className="action-icon" /> {!removeText && 'Star'}
         </>
       ) : (
         <>
-          <StarOutlined className="action-icon" /> {!removeText && "Star"}
+          <StarOutlined className="action-icon" /> {!removeText && 'Star'}
         </>
       )}
-    </div>
+    </button>
   );
 };
 
-export default index;
+export default GistStar;

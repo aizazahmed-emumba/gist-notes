@@ -1,21 +1,23 @@
-import React from "react";
-import { useSelector } from "react-redux";
-import { RootState } from "../../store";
-import { Avatar, ConfigProvider, Table, TableColumnsType } from "antd";
-import { Gist } from "../../types/Gist";
-import GistStar from "../../components/GistStar";
-import GistFork from "../../components/GistFork";
-import "./GistListLayour.scss";
-import formatRelativeTime from "../../utils/formatRelativeTime";
+import React from 'react';
+import { useSelector } from 'react-redux';
+// eslint-disable-next-line import/named
+import { Avatar, ConfigProvider, Table, TableColumnsType } from 'antd';
+import { RootState } from '../../store';
+import { Gist, GistFiles } from '../../types/Gist';
+import GistStar from '../GistStar';
+import GistFork from '../GistFork';
+import './GistListLayour.scss';
+import formatRelativeTime from '../../utils/formatRelativeTime';
+import { Owner } from '../../types/Owner';
 
-const index: React.FC = () => {
+const GistListLayout: React.FC = () => {
   const gists = useSelector((state: RootState) => state.gists.value);
 
   const columns: TableColumnsType<Gist> = [
     {
-      title: "Name",
-      dataIndex: "owner",
-      render: (owner: any) => (
+      title: 'Name',
+      dataIndex: 'owner',
+      render: (owner: Owner) => (
         <div className="flex max-w-52 justify-between items-center gap-4">
           <Avatar size={50} src={owner.avatar_url} />
           <div>{owner.login}</div>
@@ -23,16 +25,16 @@ const index: React.FC = () => {
       ),
     },
     {
-      title: "Notebook Name",
-      dataIndex: "files",
-      render: (files: any) => <a>{files[Object.keys(files)[0]].filename}</a>,
+      title: 'Notebook Name',
+      dataIndex: 'files',
+      render: (files: GistFiles) => <div>{files[Object.keys(files)[0]].filename}</div>,
     },
     {
-      title: "Keyword",
-      dataIndex: "description",
+      title: 'Keyword',
+      dataIndex: 'description',
       render: (text: string) => {
         if (!text) return null;
-        const keywords = text.split(" ");
+        const keywords = text.split(' ');
         return (
           <div className="flex justify-center items-center">
             <span className="keyword">{keywords[0]}</span>
@@ -41,13 +43,13 @@ const index: React.FC = () => {
       },
     },
     {
-      title: "Updated",
-      dataIndex: "updated_at",
-      render: (text: string) => <a>{formatRelativeTime(text)}</a>,
+      title: 'Updated',
+      dataIndex: 'updated_at',
+      render: (text: string) => <div>{formatRelativeTime(text)}</div>,
     },
     {
-      title: "",
-      dataIndex: "id",
+      title: '',
+      dataIndex: 'id',
       render: (id: string) => (
         <div className="flex justify-center items-center gap-5">
           <GistStar key={id} removeText gistId={id} />
@@ -63,7 +65,7 @@ const index: React.FC = () => {
         theme={{
           components: {
             Table: {
-              headerBg: "#EFEFEF",
+              headerBg: '#EFEFEF',
             },
           },
         }}
@@ -74,4 +76,4 @@ const index: React.FC = () => {
   );
 };
 
-export default index;
+export default GistListLayout;

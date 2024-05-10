@@ -1,7 +1,7 @@
 import React from 'react';
 import { render, fireEvent, waitFor } from '@testing-library/react';
 import GistFork from './index';
-import { gistAPI } from '../../API/GistAPI';
+import { gistAPI } from '../../api/GistAPI';
 import toast from 'react-hot-toast';
 
 jest.mock('react-hot-toast');

@@ -1,26 +1,25 @@
 @import '../../colors';
 
-
 .nav-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 8rem;
+  background-color: $primary;
+  color: #fff;
+  font-size: 1.2rem;
+  height: 80px;
+  width: 100%;
+  .nav-logo {
+    height: 2.5rem;
+    width: auto;
+  }
+  .nav-content {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 0 8rem;
-    background-color: $primary;
-    color: #fff;
-    font-size: 1.2rem;
-    height: 80px;
-    width: 100%;
-    .nav-logo{
-        height: 2.5rem;
-        width: auto;
-    }
-    .nav-content {
-        display : flex;
-        justify-content: space-between;
-        align-items: center;
-        gap: 2rem;
-    }
+    gap: 2rem;
+  }
 }
 
 // .ant-input-group-addon{
@@ -34,11 +33,11 @@
 // }
 
 .input ::placeholder {
-    color: white;
+  color: white;
 }
 
-.button-nav{
-    color: $primary;
-    font-weight:500 ;
-    width: 100%;
+.button-nav {
+  color: $primary;
+  font-weight: 500;
+  width: 100%;
 }

@@ -28,12 +28,12 @@ jest.mock('react-redux', () => ({
 
 describe('GistListLayout', () => {
   it('renders gists list layout with correct data', () => {
-    useSelector.mockReturnValueOnce(mockGists); 
+    useSelector.mockReturnValueOnce(mockGists);
 
-    const { getByText, getAllByRole } = render(
+    const { getByText } = render(
       <Provider store={store}>
         <GistListLayout />
-      </Provider>
+      </Provider>,
     );
 
     expect(getByText('user1')).toBeInTheDocument();
@@ -44,6 +44,5 @@ describe('GistListLayout', () => {
     expect(getByText('Another')).toBeInTheDocument();
     expect(getByText('file1.js')).toBeInTheDocument();
     expect(getByText('file2.py')).toBeInTheDocument();
-
   });
 });

@@ -7,8 +7,7 @@ interface GistDescriptionProps {
   gist: Gist;
 }
 
-const index: React.FC<GistDescriptionProps> = ({ gist }) => {
-  return (
+const index: React.FC<GistDescriptionProps> = ({ gist }) => (
     <div className="flex flex-row gap-3 justify-start items-center py-3 ml-2 ">
       <Avatar size={50} src={gist?.owner.avatar_url} />
       <div className="flex flex-col">
@@ -25,6 +24,5 @@ const index: React.FC<GistDescriptionProps> = ({ gist }) => {
       </div>
     </div>
   );
-};
 
 export default index;

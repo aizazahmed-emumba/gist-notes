@@ -1,7 +1,7 @@
 import React from 'react';
 import { render } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
-import { Provider } from 'react-redux';
+import { Provider, useSelector } from 'react-redux';
 import { store } from '../../store';
 import GistGridLayout from './GistGridLayout';
 
@@ -29,17 +29,16 @@ jest.mock('react-redux', () => ({
 
 describe('GistGridLayout', () => {
   it('renders gists grid layout with correct data', () => {
-    useSelector.mockReturnValueOnce(mockGists); 
+    useSelector.mockReturnValueOnce(mockGists);
 
     const { getAllByText, getByText } = render(
       <Provider store={store}>
         <MemoryRouter>
           <GistGridLayout />
         </MemoryRouter>
-      </Provider>
+      </Provider>,
     );
 
-   
     expect(getAllByText(/file\d\.(js|py)/i).length).toBe(2);
 
     const linkElements = document.querySelectorAll('a[href^="/gist/"]');

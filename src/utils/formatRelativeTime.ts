@@ -10,22 +10,22 @@ export default function formatRelativeTime(isoDateString: string): string {
     if (days > 0) {
         if (days === 1) {
             return '1 day ago';
-        } else {
-            return days + ' days ago';
-        }
-    } else if (hours > 0) {
+        } 
+            return `${days  } days ago`;
+        
+    } if (hours > 0) {
         if (hours === 1) {
             return '1 hour ago';
-        } else {
-            return hours + ' hours ago';
-        }
-    } else if (minutes > 0) {
+        } 
+            return `${hours  } hours ago`;
+        
+    } if (minutes > 0) {
         if (minutes === 1) {
             return '1 minute ago';
-        } else {
-            return minutes + ' minutes ago';
-        }
-    } else {
+        } 
+            return `${minutes  } minutes ago`;
+        
+    } 
         return 'just now';
-    }
+    
 }

@@ -1,15 +1,9 @@
-const DeleteIcon = () => {
+function DeleteIcon() {
   return (
-    <svg
-      width="18"
-      height="19"
-      viewBox="0 0 18 19"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-    >
+    <svg width="18" height="19" viewBox="0 0 18 19" fill="none" xmlns="http://www.w3.org/2000/svg">
       <path
-        fill-rule="evenodd"
-        clip-rule="evenodd"
+        fillRule="evenodd"
+        clipRule="evenodd"
         d="M12.3337 1.45833V2.5H16.7087C17.0538 2.5 17.3337 2.77982 17.3337 3.125C17.3337 3.47018 17.0538 3.75 16.7087 3.75H1.29199C0.946814 3.75 0.666992 3.47018 0.666992 3.125C0.666992 2.77982 0.946814 2.5 1.29199 2.5H5.66699V1.45833C5.66699 0.652918 6.31991 0 7.12533 0H10.8753C11.6807 0 12.3337 0.652918 12.3337 1.45833ZM6.91699 1.45833C6.91699 1.34327 7.01027 1.25 7.12533 1.25H10.8753C10.9904 1.25 11.0837 1.34327 11.0837 1.45833V2.5H6.91699V1.45833Z"
         fill="#E30000"
       />
@@ -27,6 +21,6 @@ const DeleteIcon = () => {
       />
     </svg>
   );
-};
+}
 
 export default DeleteIcon;

@@ -1,13 +1,13 @@
-import { Input } from "antd";
-import React from "react";
-import { Formik, Form, ErrorMessage, FieldArray } from "formik";
-import { useNavigate } from "react-router-dom";
+import { Input } from 'antd';
+import React from 'react';
+import { Formik, Form, ErrorMessage, FieldArray } from 'formik';
+import { useNavigate } from 'react-router-dom';
+import toast from 'react-hot-toast';
+import DeleteIcon from '../../components/Icons/DeleteIcon';
+import { gistAPI } from '../../api/GistAPI';
+import { FileAccType } from '../../types/File';
 
-import DeleteIcon from "../../components/Icons/DeleteIcon";
-import { gistAPI } from "../../api/GistAPI";
-import toast from "react-hot-toast";
-
-const index: React.FC = () => {
+const CreateGistPage: React.FC = () => {
   const navigate = useNavigate();
 
   return (
@@ -16,16 +16,16 @@ const index: React.FC = () => {
       <div className="flex justify-center items-center w-full">
         <Formik
           initialValues={{
-            description: "",
-            file: [{ filename: "", content: "" }],
-            content: "",
+            description: '',
+            file: [{ filename: '', content: '' }],
+            content: '',
           }}
           onSubmit={async (values) => {
             try {
-              const res = await gistAPI.post("/gists", {
+              const res = await gistAPI.post('/gists', {
                 description: values.description,
                 public: true,
-                files: values.file.reduce((acc: any, file) => {
+                files: values.file.reduce((acc: FileAccType, file) => {
                   acc[file.filename] = {
                     content: file.content,
                   };
@@ -34,12 +34,12 @@ const index: React.FC = () => {
               });
 
               if (res.status === 201) {
-                toast.success("Gist Created Successfully");
+                toast.success('Gist Created Successfully');
               }
-              navigate("/gist/" + res.data.id);
-            } catch (error: any) {
+              navigate(`/gist/${  res.data.id}`);
+            } catch (error: unknown) {
               console.log(error);
-              toast.error("Failed to create Gist");
+              toast.error('Failed to create Gist');
             }
           }}
         >
@@ -51,7 +51,7 @@ const index: React.FC = () => {
                   size="large"
                   type="text"
                   style={{
-                    borderColor: "#A3A3A3",
+                    borderColor: '#A3A3A3',
                   }}
                   placeholder="Gist Description"
                   className="input"
@@ -64,14 +64,14 @@ const index: React.FC = () => {
                     <>
                       {values.file.length > 0 &&
                         values.file.map((_, index) => (
-                          <div className="w-full border flex flex-col">
+                          <div key={index} className="w-full border flex flex-col">
                             <div className="px-2 py-3 bg-[#FAFAFA] flex justify-start items-center gap-5">
                               <Input
                                 name={`file.${index}.filename`}
                                 style={{
-                                  width: "50%",
-                                  backgroundColor: "transparent",
-                                  border: "1px solid #A3A3A3",
+                                  width: '50%',
+                                  backgroundColor: 'transparent',
+                                  border: '1px solid #A3A3A3',
                                 }}
                                 placeholder="Filename including extension"
                                 className="input"
@@ -82,9 +82,7 @@ const index: React.FC = () => {
                               />
                               <ErrorMessage
                                 name={`file.${index}.filename`}
-                                render={(msg) => (
-                                  <div className="text-red-500">{msg}</div>
-                                )}
+                                render={(msg) => <div className="text-red-500">{msg}</div>}
                               />
 
                               <button
@@ -104,13 +102,13 @@ const index: React.FC = () => {
                                 size="large"
                                 autoSize={{ minRows: 10 }}
                                 style={{
-                                  border: "none",
+                                  border: 'none',
                                 }}
                                 onChange={handleChange}
                                 value={values.file[index].content}
                               />
                             </div>
-                            <div></div>
+                            <div />
                           </div>
                         ))}
                       <div className="flex justify-between items-center">
@@ -123,11 +121,7 @@ const index: React.FC = () => {
                         >
                           Add file
                         </button>
-                        <button
-                          disabled={isSubmitting}
-                          type="submit"
-                          className="button"
-                        >
+                        <button disabled={isSubmitting} type="submit" className="button">
                           Create Gist
                         </button>
                       </div>
@@ -143,4 +137,4 @@ const index: React.FC = () => {
   );
 };
 
-export default index;
+export default CreateGistPage;
