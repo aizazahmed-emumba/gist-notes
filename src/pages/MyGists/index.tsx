@@ -16,7 +16,7 @@ const MyGistsPage: React.FC = () => {
   const { error, loading, value } = useSelector((state: RootState) => state.myGists);
 
   const params = useParams();
-  const {gistType} = params;
+  const { gistType } = params;
   const navigate = useNavigate();
   const dispatch: AppDispatch = useDispatch();
 
@@ -55,7 +55,7 @@ const MyGistsPage: React.FC = () => {
           </div>
           <div className="flex flex-col gap-5 justify-center items-center mb-10">
             {loading && (
-              <div className="flex justify-center items-center">
+              <div data-testid="loading" className="flex justify-center items-center">
                 <Spin />
               </div>
             )}

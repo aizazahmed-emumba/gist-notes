@@ -27,11 +27,11 @@ const HomePage: React.FC = () => {
   const handlePageChange = (next: boolean) => {
     if (next) {
       setSearchParams({
-        page: (page + 1).toString(),
+        page: (page + 1).toString()
       });
     } else {
       setSearchParams({
-        page: (page - 1).toString(),
+        page: (page - 1).toString()
       });
     }
   };
@@ -42,6 +42,7 @@ const HomePage: React.FC = () => {
         <h1 className="text-2xl font-normal">Public Gists</h1>
         <div className="flex justify-between items-center w-14">
           <div
+            data-testid="grid-layout-button"
             className="grid-layout-icon-container"
             onClick={() => setGridLayout(true)}
             onKeyDown={(e) => {
@@ -52,15 +53,16 @@ const HomePage: React.FC = () => {
             role="button"
             tabIndex={0}
             style={{
-              backgroundColor: gridLayout ? '#E3E3E3' : 'white',
+              backgroundColor: gridLayout ? '#E3E3E3' : 'white'
             }}
           >
             <GridLayoutIcon />
           </div>
           <div
             style={{
-              backgroundColor: !gridLayout ? '#E3E3E3' : 'white',
+              backgroundColor: !gridLayout ? '#E3E3E3' : 'white'
             }}
+            data-testid="list-layout-button"
             className="list-layout-icon-container "
             onClick={() => setGridLayout(false)}
             onKeyDown={(e) => {

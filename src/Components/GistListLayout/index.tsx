@@ -18,16 +18,18 @@ const GistListLayout: React.FC = () => {
       title: 'Name',
       dataIndex: 'owner',
       render: (owner: Owner) => (
-        <div className="flex max-w-52 justify-between items-center gap-4">
+        <div key={owner.id} className="flex max-w-52 justify-between items-center gap-4">
           <Avatar size={50} src={owner.avatar_url} />
           <div>{owner.login}</div>
         </div>
-      ),
+      )
     },
     {
       title: 'Notebook Name',
       dataIndex: 'files',
-      render: (files: GistFiles) => <div>{files[Object.keys(files)[0]].filename}</div>,
+      render: (files: GistFiles) => (
+        <div key={files[Object.keys(files)[0]].filename}>{files[Object.keys(files)[0]].filename}</div>
+      )
     },
     {
       title: 'Keyword',
@@ -36,38 +38,38 @@ const GistListLayout: React.FC = () => {
         if (!text) return null;
         const keywords = text.split(' ');
         return (
-          <div className="flex justify-center items-center">
+          <div key={text} className="flex justify-center items-center">
             <span className="keyword">{keywords[0]}</span>
           </div>
         );
-      },
+      }
     },
     {
       title: 'Updated',
       dataIndex: 'updated_at',
-      render: (text: string) => <div>{formatRelativeTime(text)}</div>,
+      render: (text: string) => <div key={text}>{formatRelativeTime(text)}</div>
     },
     {
       title: '',
       dataIndex: 'id',
       render: (id: string) => (
-        <div className="flex justify-center items-center gap-5">
-          <GistStar key={id} removeText gistId={id} />
+        <div key={id} className="flex justify-center items-center gap-5">
+          <GistStar removeText gistId={id} />
           <GistFork forks={[]} key={id} removeText gistId={id} />
         </div>
-      ),
-    },
+      )
+    }
   ];
 
   return (
-    <div className="mt-10">
+    <div data-testid="gist-list-layout" className="mt-10">
       <ConfigProvider
         theme={{
           components: {
             Table: {
-              headerBg: '#EFEFEF',
-            },
-          },
+              headerBg: '#EFEFEF'
+            }
+          }
         }}
       >
         <Table pagination={false} columns={columns} dataSource={gists} />

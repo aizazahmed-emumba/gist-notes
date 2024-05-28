@@ -18,7 +18,7 @@ const CreateGistPage: React.FC = () => {
           initialValues={{
             description: '',
             file: [{ filename: '', content: '' }],
-            content: '',
+            content: ''
           }}
           onSubmit={async (values) => {
             try {
@@ -27,16 +27,16 @@ const CreateGistPage: React.FC = () => {
                 public: true,
                 files: values.file.reduce((acc: FileAccType, file) => {
                   acc[file.filename] = {
-                    content: file.content,
+                    content: file.content
                   };
                   return acc;
-                }, {}),
+                }, {})
               });
 
               if (res.status === 201) {
                 toast.success('Gist Created Successfully');
               }
-              navigate(`/gist/${  res.data.id}`);
+              navigate(`/gist/${res.data.id}`);
             } catch (error: unknown) {
               console.log(error);
               toast.error('Failed to create Gist');
@@ -51,7 +51,7 @@ const CreateGistPage: React.FC = () => {
                   size="large"
                   type="text"
                   style={{
-                    borderColor: '#A3A3A3',
+                    borderColor: '#A3A3A3'
                   }}
                   placeholder="Gist Description"
                   className="input"
@@ -71,7 +71,7 @@ const CreateGistPage: React.FC = () => {
                                 style={{
                                   width: '50%',
                                   backgroundColor: 'transparent',
-                                  border: '1px solid #A3A3A3',
+                                  border: '1px solid #A3A3A3'
                                 }}
                                 placeholder="Filename including extension"
                                 className="input"
@@ -102,7 +102,7 @@ const CreateGistPage: React.FC = () => {
                                 size="large"
                                 autoSize={{ minRows: 10 }}
                                 style={{
-                                  border: 'none',
+                                  border: 'none'
                                 }}
                                 onChange={handleChange}
                                 value={values.file[index].content}
@@ -121,7 +121,7 @@ const CreateGistPage: React.FC = () => {
                         >
                           Add file
                         </button>
-                        <button disabled={isSubmitting} type="submit" className="button">
+                        <button name="Create Gist" disabled={isSubmitting} type="submit" className="button">
                           Create Gist
                         </button>
                       </div>

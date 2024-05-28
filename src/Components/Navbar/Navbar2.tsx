@@ -55,29 +55,29 @@ const Navbar2: React.FC = () => {
           Signed in as <br /> <span className="font-semibold">{user?.screenName}</span>
         </div>
       ),
-      key: '0',
+      key: '0'
     },
     {
-      type: 'divider',
+      type: 'divider'
     },
     {
       label: <Link to="/my-gists/all">Your Gists</Link>,
-      key: '1',
+      key: '1'
     },
     {
       label: <Link to="/my-gists/starred">Starred Gists</Link>,
-      key: '3',
+      key: '3'
     },
     {
       label: <Link to="/create">Create Gist</Link>,
-      key: '4',
+      key: '4'
     },
     {
-      type: 'divider',
+      type: 'divider'
     },
     {
       label: <a href={`https://github.com/${user?.screenName}`}>Your Github Profile</a>,
-      key: '5',
+      key: '5'
     },
     {
       label: (
@@ -90,8 +90,8 @@ const Navbar2: React.FC = () => {
           Sign out
         </button>
       ),
-      key: '6',
-    },
+      key: '6'
+    }
   ];
 
   return (
@@ -110,14 +110,14 @@ const Navbar2: React.FC = () => {
             addonBefore={<SearchOutlined className="text-white" />}
             classNames={{}}
             style={{
-              minWidth: '300px',
+              minWidth: '300px'
             }}
             styles={{
               input: {
                 backgroundColor: 'transparent',
                 color: 'white',
-                borderLeft: 'none',
-              },
+                borderLeft: 'none'
+              }
             }}
             placeholder="Search Gists ..."
             variant="outlined"
@@ -132,6 +132,7 @@ const Navbar2: React.FC = () => {
                   <button onClick={(e) => e.preventDefault()}>
                     <Space>
                       <Avatar
+                        data-testid="avatar"
                         src={user.photoUrl}
                         size={{
                           xs: 24,
@@ -139,7 +140,7 @@ const Navbar2: React.FC = () => {
                           md: 30,
                           lg: 40,
                           xl: 50,
-                          xxl: 60,
+                          xxl: 60
                         }}
                       />
                     </Space>
@@ -152,7 +153,7 @@ const Navbar2: React.FC = () => {
               </Button>
             )
           ) : (
-            <Spin />
+            <Spin data-testid="loading" />
           )}
         </div>
       </div>

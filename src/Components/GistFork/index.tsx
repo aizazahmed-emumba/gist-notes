@@ -19,6 +19,7 @@ const Index: React.FC<GistForkProps> = ({ gistId, removeText, white, forks, butt
   const [forked, setForked] = useState<boolean>(false);
   const { user } = useSelector((state: RootState) => state.userState);
   const [loading, setLoading] = useState<boolean>(false);
+
   const handleForkGist = async () => {
     if (forks.find((fork) => fork.user.login === user?.screenName)) {
       // setForked(true);
@@ -33,7 +34,6 @@ const Index: React.FC<GistForkProps> = ({ gistId, removeText, white, forks, butt
     try {
       setLoading(true);
       const res = await gistAPI.post(`/gists/${gistId}/forks`);
-      console.log(res);
       if (res.status === 201) {
         toast.success('Gist Forked Successfully');
         setForked(true);

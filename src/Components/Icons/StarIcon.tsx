@@ -1,4 +1,6 @@
-function StarIcon() {
+import React from 'react';
+
+const StarIcon: React.FC = () => {
   return (
     <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
       <path
@@ -9,6 +11,6 @@ function StarIcon() {
       />
     </svg>
   );
-}
+};
 
 export default StarIcon;

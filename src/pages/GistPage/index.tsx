@@ -63,7 +63,7 @@ const GistPage: React.FC = () => {
 
   if (Loading)
     return (
-      <div className="flex justify-center items-center h-screen">
+      <div data-testid="loading-spinner" id=".ant-spin" className="flex justify-center items-center h-screen">
         <Spin />
       </div>
     );
@@ -73,7 +73,7 @@ const GistPage: React.FC = () => {
   return (
     <>
       {Loading ? (
-        <div className="flex justify-center items-center h-screen">
+        <div data-testid="loading-spinner" className="flex justify-center items-center h-screen">
           <Spin />
         </div>
       ) : (
@@ -90,7 +90,7 @@ const GistPage: React.FC = () => {
               {user?.screenName === gist.owner.login && (
                 <>
                   <Link
-                    to={`/edit/${  gist.id}`}
+                    to={`/edit/${gist.id}`}
                     className="cursor-pointer mx-2 flex gap-1 items-center w-full justify-center button h-[40px] "
                   >
                     <div>
